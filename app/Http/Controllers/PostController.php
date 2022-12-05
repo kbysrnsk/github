@@ -25,9 +25,22 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
     }
     
+        public function edit(Post $post)
+    {
+        return view('posts/edit')->with(['post' => $post]);
+    }
+    
         public function show(Post $post)
     {
         return view('posts/show')->with(['post' => $post]);
      //'post'はbladeファイルで使う変数。中身は$postはid=1のPostインスタンス。
+    }
+    
+        public function update(PostRequest $request, Post $post)
+    {
+        $input_post = $request['post'];
+        $post->fill($input_post)->save();
+    
+        return redirect('/posts/' . $post->id);
     }
 }
